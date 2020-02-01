@@ -1,0 +1,23 @@
+#!/bin/bash
+
+# source: https://denibertovic.com/posts/handling-permissions-with-docker-volumes/
+
+# Add local user
+# Either use the LOCAL_USER_ID if passed in at runtime or
+# fallback
+
+USER_ID=${LOCAL_USER_ID:-9001}
+USER_NAME=student
+
+# echo "Starting with UID : $USER_ID"
+if [[ -d /home/${USER_NAME} ]]
+then
+    # supress home already exist warning
+    useradd --shell /bin/bash -u $USER_ID -o -c "" -m ${USER_NAME}  2>/dev/null
+else
+    useradd --shell /bin/bash -u $USER_ID -o -c "" -m ${USER_NAME}
+fi
+export HOME=/home/${USER_NAME}
+
+cd ${HOME}
+exec /usr/sbin/gosu ${USER_NAME} "$@"
