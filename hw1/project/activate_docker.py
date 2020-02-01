@@ -3,6 +3,7 @@
 import sys
 import subprocess
 import pathlib
+from pathlib import Path
 import os
 
 assert sys.version_info >= (3, 4)
@@ -23,6 +24,10 @@ def main():
     # print(f'dirpath :{dirpath}')
     cwd = os.getcwd()
 
+    bash_his = Path(f'{dirpath}/.history/docker_bash_history')
+    bash_his.parent.mkdir(exist_ok=True)
+    bash_his.touch(exist_ok=True)
+
     docker_options = [
         'docker', 'run',
         '--rm', '-it',
@@ -31,7 +36,7 @@ def main():
         '-v', f'{os.getcwd()}:/home/{DOCKER_USER_NAME}',
 
         # history file
-        '-v', f'{dirpath}/history/docker_bash_history:/{dk_home}/.bash_history',
+        '-v', f'{dirpath}/.history/docker_bash_history:/{dk_home}/.bash_history',
         DOCKER_IMG_NAME,
     ]
     # print(f'cmd: #{" ".join(docker_options)}#')
