@@ -7,6 +7,9 @@ IMG_NAME = compiler-hw1-env
 build: Dockerfile
 	docker build -t $(IMG_NAME) .
 
+compact-build: compact.Dockerfile
+	docker build -t $(IMG_NAME):compact -f compact.Dockerfile .
+
 run:
 	docker run --rm -it \
 				--hostname compiler-f19 \
