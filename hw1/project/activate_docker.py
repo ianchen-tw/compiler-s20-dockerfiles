@@ -11,7 +11,7 @@ import os
 assert sys.version_info >= (3, 4)
 
 parser = argparse.ArgumentParser(
-    description='Avtivate python environment for compiler-f19 HW0')
+    description='Activate homework environment for compiler-s20')
 parser.add_argument( '-t','--test-src-fld',
                     nargs=1,
                     default=[None],
@@ -24,13 +24,10 @@ dirpath = os.path.dirname(os.path.abspath(__file__))
 
 DOCKER_USER_NAME = 'student'
 DOCKER_HOST_NAME = 'compiler-f19'
-DOCKER_IMG_NAME = 'compiler-hw1-env'
+DOCKER_IMG_NAME = 'compiler-s20-env'
 
 dk_home = f'home/{DOCKER_USER_NAME}'
 
-
-# TODO: add option:
-#   --test-src-folder
 
 def main():
     # print(f'dirpath :{dirpath}')
@@ -51,11 +48,11 @@ def main():
         '-e', f'LOCAL_USER_GID={os.getgid()}',
         '-v', f'{os.getcwd()}:/home/{DOCKER_USER_NAME}',
         f'-v {os.path.abspath(test_src_fld)}:/{dk_home}/test' if test_src_fld else '',
-        # history file
+
+        # bash history file
         '-v', f'{dirpath}/.history/docker_bash_history:/{dk_home}/.bash_history',
         DOCKER_IMG_NAME,
     ]
-    # print(f'cmd: #{" ".join(docker_options)}#')
     os.system(' '.join(docker_options))
 
 

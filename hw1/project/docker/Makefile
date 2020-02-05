@@ -2,7 +2,7 @@ all: build
 .PHONY: build run
 
 DOCKER_USER_NAME = student
-IMG_NAME = compiler-hw1-env
+IMG_NAME = compiler-s20-env
 
 build: Dockerfile
 	docker build -t $(IMG_NAME) .

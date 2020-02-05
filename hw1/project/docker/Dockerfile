@@ -7,7 +7,7 @@ RUN apt-get update
 RUN apt-get --no-install-recommends install -y \
     gosu \
     python3 python3-pip python3-setuptools python3-wheel\
-    flex gcc
+    gcc flex bison
     # && rm -rf /var/lib/apt/lists/*
 # RUN rm -rf /var/lib/apt/lists/*
 
