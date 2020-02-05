@@ -32,7 +32,10 @@ RUN cd ~ && git clone https://github.com/riscv/riscv-isa-sim.git && \
 # final image
 FROM ubuntu:18.04
 
-COPY --from=riscv-builder $RISCV $RISCV
+ENV RISCV_BIN /risc-v/bin/
+COPY --from=riscv-builder $RISCV_BIN/riscv64-unknown-elf-gcc $RISCV_BIN/spike $RISCV_BIN
+
+
 ENV PATH="/risc-v/bin:${PATH}"
 
 RUN apt-get update && apt-get install -y \
