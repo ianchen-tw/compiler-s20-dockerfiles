@@ -1,8 +1,11 @@
 all: build
 .PHONY: build fake
 
+# Do not named user and group the same, this would cause error in entrypoint.sh
+#	because we create the group before user exist which allowing name-crash in useradd command
 CONTAINER_USERNAME ?= dummy
 CONTAINER_GROUPNAME ?=dummyg
+
 CONTAINER_HOMEDIR ?= /home/dummyg
 IMAGE_NAME ?= dummy-image
 

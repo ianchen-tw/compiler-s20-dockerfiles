@@ -7,7 +7,7 @@ RUN apt-get update
 RUN apt-get --no-install-recommends install -y \
     gosu \
     python3 python3-pip python3-setuptools python3-wheel\
-    gcc flex bison
+    gcc flex bison make
     # && rm -rf /var/lib/apt/lists/*
 # RUN rm -rf /var/lib/apt/lists/*
 
@@ -23,6 +23,9 @@ ARG CONTAINER_HOMEDIR=/home/dummy
 ENV DOCKER_USERNAME_PASSIN ${CONTAINER_USERNAME}
 ENV DOCKER_GROUPNAME_PASSIN ${CONTAINER_GROUPNAME}
 ENV DOCKER_HOMEDIR_PASSIN ${CONTAINER_HOMEDIR}
+
+# flag to prevent student to recursively enter docker environment
+ENV STATUS_DOCKER_ACTIVATED 1
 
 COPY entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh

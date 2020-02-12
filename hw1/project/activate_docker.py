@@ -17,7 +17,7 @@ parser.add_argument( '-t','--test-src-fld',
                     default=[None],
                     help="Append different test folder")
 parser.add_argument( '-u','--username',default="student",)
-parser.add_argument( '--hostname', default='compiler-f19')
+parser.add_argument( '--hostname', default='compiler-s20')
 parser.add_argument( '--homedir', default='/home/student')
 parser.add_argument( '-i','--imagename', default='compiler-s20-env')
 
@@ -31,7 +31,30 @@ dk_home = args.homedir
 
 dirpath = os.path.dirname(os.path.abspath(__file__))
 
+recurisive_docker_msg='''
+    .
+    .
+   . ;.
+    .;
+     ;;.
+   ;.;;
+   ;;;;.
+   ;;;;;
+   ;;;;;                                       
+   ;;;;;
+   ;;;;;    Don't activate environment twice QQ
+   ;;;;;
+ ..;;;;;..  You are already inside our docker environment, see?
+  ':::::'
+    ':`                              - copmiler-S20 @SSLAB_NCTU
+'''
+
 def main():
+    # prevent student to 
+    if "STATUS_DOCKER_ACTIVATED" in os.environ:
+        print(recurisive_docker_msg)
+        sys.exit(0)
+
     # print(f'dirpath :{dirpath}')
     cwd = os.getcwd()
 
@@ -49,7 +72,7 @@ def main():
         '-e', f'LOCAL_USER_ID={os.getuid()}',
         '-e', f'LOCAL_USER_GID={os.getgid()}',
         '-v', f'{os.getcwd()}:/home/{DOCKER_USER_NAME}',
-        f'-v {os.path.abspath(test_src_fld)}:/{dk_home}/test' if test_src_fld else '',
+        f'-v {os.path.abspath(test_src_fld)}:{dk_home}/test' if test_src_fld else '',
 
         # bash history file
         '-v', f'{dirpath}/.history/docker_bash_history:/{dk_home}/.bash_history',

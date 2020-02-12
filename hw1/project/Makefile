@@ -1,14 +1,18 @@
 all: docker-build
-.PHONY: docker-build activate
+.PHONY: activate
 
-# Docker args
+# ===================== Docker args
 IMAGE_NAME = compiler-s20-env
-CONTAINER_USERNAME = asdf
-CONTAINER_GROUPNAME = ee
-HOST_NAME=testhost
+
+# Do not named user and group the same, this would cause error in entrypoint.sh
+#	because we create the group before user exist which allowing name-crash in useradd command
+CONTAINER_USERNAME = student
+CONTAINER_GROUPNAME = studentg
+
+HOST_NAME=compiler-s20
 HOMEDIR = /home/$(CONTAINER_USERNAME)
 
-
+# ===================== end Docker args
 
 docker-build:
 	${MAKE} \
@@ -19,6 +23,7 @@ docker-build:
 		HOMEDIR=${HOMEDIR} \
 		-C docker
 
+# TODO: change --imagename to our official repo:image
 activate:
 	python3 ./activate_docker.py \
 		--username ${CONTAINER_USERNAME} \
