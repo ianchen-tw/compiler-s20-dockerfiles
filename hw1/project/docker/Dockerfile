@@ -16,6 +16,13 @@ RUN apt-get --no-install-recommends install -y \
 RUN pip3 install colorama
 
 # optional packages
+ARG CONTAINER_USERNAME=dummy
+ARG CONTAINER_GROUPNAME=dummyg
+ARG CONTAINER_HOMEDIR=/home/dummy
+
+ENV DOCKER_USERNAME_PASSIN ${CONTAINER_USERNAME}
+ENV DOCKER_GROUPNAME_PASSIN ${CONTAINER_GROUPNAME}
+ENV DOCKER_HOMEDIR_PASSIN ${CONTAINER_HOMEDIR}
 
 COPY entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh

@@ -1,18 +1,16 @@
 all: build
-.PHONY: build run
+.PHONY: build fake
 
-DOCKER_USER_NAME = student
-IMG_NAME = compiler-s20-env
+CONTAINER_USERNAME ?= dummy
+CONTAINER_GROUPNAME ?=dummyg
+CONTAINER_HOMEDIR ?= /home/dummyg
+IMAGE_NAME ?= dummy-image
 
 build: Dockerfile
-	docker build -t $(IMG_NAME) .
-
-compact-build: compact.Dockerfile
-	docker build -t $(IMG_NAME):compact -f compact.Dockerfile .
-
-run:
-	docker run --rm -it \
-				--hostname compiler-f19 \
-				-e LOCAL_USER_ID=`id -u ${USER}` \
-				-v $(shell pwd)/project:/home/${DOCKER_USER_NAME} \
-				$(IMG_NAME)
+	docker build \
+		--build-arg CONTAINER_USERNAME=${CONTAINER_USERNAME} \
+		--build-arg CONTAINER_GROUPNAME=${CONTAINER_GROUPNAME} \
+		--build-arg CONTAINER_HOMEDIR=${CONTAINER_HOMEDIR} \
+		-t $(IMAGE_NAME) .
+fake:
+	echo "IMG NAME: ${IMAGE_NAME}"

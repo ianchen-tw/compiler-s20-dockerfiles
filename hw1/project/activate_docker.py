@@ -16,18 +16,20 @@ parser.add_argument( '-t','--test-src-fld',
                     nargs=1,
                     default=[None],
                     help="Append different test folder")
+parser.add_argument( '-u','--username',default="student",)
+parser.add_argument( '--hostname', default='compiler-f19')
+parser.add_argument( '--homedir', default='/home/student')
+parser.add_argument( '-i','--imagename', default='compiler-s20-env')
+
 args = parser.parse_args()
 test_src_fld = args.test_src_fld[0]
+DOCKER_USER_NAME = args.username
+DOCKER_HOST_NAME = args.hostname
+DOCKER_IMG_NAME = args.imagename
+dk_home = args.homedir
+
 
 dirpath = os.path.dirname(os.path.abspath(__file__))
-
-
-DOCKER_USER_NAME = 'student'
-DOCKER_HOST_NAME = 'compiler-f19'
-DOCKER_IMG_NAME = 'compiler-s20-env'
-
-dk_home = f'home/{DOCKER_USER_NAME}'
-
 
 def main():
     # print(f'dirpath :{dirpath}')
