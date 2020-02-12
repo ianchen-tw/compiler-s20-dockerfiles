@@ -23,11 +23,12 @@ docker-build:
 		HOMEDIR=${HOMEDIR} \
 		-C docker
 
+
 # TODO: change --imagename to our official repo:image
+# we call activate_docker.py to share our args between scripts 
 activate:
-	python3 ./activate_docker.py \
+	python3 docker/activate_docker.py \
 		--username ${CONTAINER_USERNAME} \
 		--homedir ${HOMEDIR} \
 		--imagename ${IMAGE_NAME} \
 		--hostname ${HOST_NAME}
-
