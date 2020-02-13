@@ -1,5 +1,5 @@
 all: docker-build
-.PHONY: activate
+.PHONY: activate docker-build docker-push
 
 # ===================== Docker args
 IMAGE_NAME = compiler-s20-env
@@ -9,10 +9,15 @@ IMAGE_NAME = compiler-s20-env
 CONTAINER_USERNAME = student
 CONTAINER_GROUPNAME = studentg
 
-HOST_NAME=compiler-s20
+HOST_NAME = compiler-s20
 HOMEDIR = /home/$(CONTAINER_USERNAME)
 
+DOCKERHUB_ACCOUNT=ianre657
+
 # ===================== end Docker args
+
+docker-push: docker-build
+	docker login && docker tag ${IMAGE_NAME} ${DOCKERHUB_ACCOUNT}/${IMAGE_NAME}:latest && docker push
 
 docker-build:
 	${MAKE} \
